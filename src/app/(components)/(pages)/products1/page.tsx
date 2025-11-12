@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 
 async function ProductsList() {
   try {
-    const productsData = await fetch("https://fakestoreapi.com/products");
+    const productsData = await fetch("https://fakestoreapi.com/products" , {
+      cache: "no-store", // prevents prerender caching
+    });
 
     // Check if the response is OK
     if (!productsData.ok) {
-      throw new Error(
-        `Failed to fetch products: ${productsData.status} ${productsData.statusText}`
-      );
+      return null;
     }
 
     const products: ProductType[] = await productsData.json();
