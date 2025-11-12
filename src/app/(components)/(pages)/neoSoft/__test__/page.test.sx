@@ -1,0 +1,57 @@
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import NeoSOFT from "../page";
+import { useRouter } from "next/navigation";
+
+// Mock Next.js <Link> to behave like a normal <a>
+jest.mock("next/link", () => {
+  return ({ children, href }: any) => <a href={href}>{children}</a>;
+});
+
+describe("NeoSOFT Page Component", () => {
+  // 1️⃣ Snapshot test
+  it("matches snapshot", () => {
+    const { asFragment } = render(<NeoSOFT />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  // 2️⃣ Heading presence
+  it("renders the main heading correctly", () => {
+    render(<NeoSOFT />);
+    const heading = screen.getByRole("heading", {
+      name: /Welcome to NeoSOFT/i,
+    });
+    expect(heading).toBeInTheDocument();
+  });
+
+  // 3️⃣ Links presence
+  it("renders product links with correct href attributes", () => {
+    render(<NeoSOFT />);
+    const link1 = screen.getByRole("link", { name: /Check Product 1/i });
+    const link2 = screen.getByRole("link", { name: /Check Product 2/i });
+
+    expect(link1).toHaveAttribute("href", "/products1");
+    expect(link2).toHaveAttribute("href", "/products2");
+  });
+
+  // 4️⃣ Check descriptive text
+  it("displays section descriptions correctly", () => {
+    render(<NeoSOFT />);
+    expect(
+      screen.getByText(/Product 1 Server Side Rendering/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Product 2 Server Side Rendering with a Client side Child Component/i)
+    ).toBeInTheDocument();
+  });
+
+  // 5️⃣ Accessibility check: aria-label presence
+  it("has accessible navigation sections", () => {
+    render(<NeoSOFT />);
+    const navSection = screen.getByLabelText(/Product navigation links/i);
+    const detailSection = screen.getByLabelText(/Product navigation details/i);
+
+    expect(navSection).toBeInTheDocument();
+    expect(detailSection).toBeInTheDocument();
+  });
+});
