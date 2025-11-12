@@ -7,13 +7,14 @@ import { MdOutlineMenu } from "react-icons/md";
 import logo from "../../../../assets/system/neosoft-logo-2.svg";
 import { IoMdClose } from "react-icons/io";
 import Nav from "./nav";
-import { ThemeSwitcher } from "@/app/themeSwitcher";
+import ThemeToggle from "@/app/themeToggle";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 relative transition-colors duration-200">
+
+    <header className="shadow-md sticky top-0 z-50 relative transition-colors duration-200 bg-white dark:bg-gray-900">
       <div
         className="w-full max-w-full min-[1024px]:max-w-[900px] min-[1181px]:max-w-[1000px] min-[1367px]:max-w-[1200px] min-[1601px]:max-w-[1500px] mx-auto flex items-center justify-between px-4 py-3"
       >
@@ -92,14 +93,14 @@ const Header: React.FC = () => {
         
         {/* mobile Theme */}
         <div className="border-t dark:border-gray-700 mt-4 p-4 flex items-center gap-2 cursor-pointer">
-          <ThemeSwitcher  /> 
+          <ThemeToggle  /> 
           <span className="text-gray-700 dark:text-gray-300">Change Theme</span>
         </div>
       </div>
 
       {/* Desktop Theme */}
-      <div className="hidden lg:flex absolute top-4 right-2 cursor-pointer">
-        <ThemeSwitcher  />
+      <div className="hidden lg:flex absolute top-4 right-4 cursor-pointer  p-2">
+        <ThemeToggle  />
       </div>
     </header>
   );
